@@ -315,7 +315,7 @@ public class Registries {
 	}
 	
 	public static int nextDim = Integer.MAX_VALUE;
-	public static int nextDimFrozen = -1;
+	public static int nextDimFrozen = nextDim;
 	
 	public static boolean keepDimLoaded(int id, boolean keepLoaded) 
 	{
