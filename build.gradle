@@ -18,6 +18,10 @@ plugins {
     id 'maven-publish'
 }
 
+jar {
+    sourceSets.main.java.exclude('jml/evilnotch/**')
+}
+
 apply plugin: 'forge'
 
 version = "1.7.10-1.2.5.0"
