@@ -431,7 +431,7 @@ public class Registry implements Iterable<Registry.Entry>{
 	 */
 	public List<Entry> getSortable() 
 	{
-		List<Registry.Entry> list = new ArrayList(this.size());
+		List<Registry.Entry> list = new ArrayList(this.size() + JavaUtil.arrayInitCapacity);
 		for(Registry.Entry entry : this)
 			list.add(entry);
 		return list;
