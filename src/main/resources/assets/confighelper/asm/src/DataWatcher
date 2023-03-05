@@ -1,0 +1,77 @@
+package net.minecraft.entity;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import jml.confighelper.reg.Registries;
+import net.minecraft.network.PacketBuffer;
+
+public class DataWatcher{
+	
+	private static final HashMap dataTypes = new HashMap();
+	public HashMap watchedObjects = new HashMap();
+
+	public DataWatcher(Entity entityCreeper) 
+	{
+		
+	}
+
+	public static void registerDataType(Class dataType, int id)
+	{
+		dataTypes.put(dataType, id);
+	}
+
+    /**
+     * Writes a watchable object (entity attribute of type {byte, short, int, float, string, ItemStack,
+     * ChunkCoordinates}) to the specified PacketBuffer
+     */
+    public static void writeWatchableObjectToPacketBuffer(PacketBuffer buf, DataWatcher.WatchableObject entry) throws IOException
+    {
+        int type = entry.getObjectType();
+        buf.writeVarIntToBuffer(type);
+        buf.writeVarIntToBuffer(entry.getDataValueId());
+        Registries.writeWatcher(buf, type, entry.getObject());
+    }
+
+    /**
+     * Reads a list of watched objects (entity attribute of type {byte, short, int, float, string, ItemStack,
+     * ChunkCoordinates}) from the supplied PacketBuffer
+     */
+    public static List readWatchedListFromPacketBuffer(PacketBuffer buf) throws IOException
+    {
+        List<DataWatcher.WatchableObject> list = new ArrayList();
+        int size = buf.readVarIntFromBuffer();
+        for(int i=0; i < size; i++)
+        {
+            int dataType = buf.readVarIntFromBuffer();
+            int id = buf.readVarIntFromBuffer();
+            Object obj = Registries.readWatcher(buf, dataType);
+            DataWatcher.WatchableObject watchableobject = new DataWatcher.WatchableObject(dataType, id, obj);
+            list.add(watchableobject);
+        }
+        return list.isEmpty() ? null : list;
+    }
+    
+	public static class WatchableObject 
+	{
+        public WatchableObject(int p_i1603_1_, int p_i1603_2_, Object p_i1603_3_)
+        {
+        	
+        }
+        public int getObjectType()
+        {
+            return -1;
+        }
+		public int getDataValueId()
+        {
+           return -1;
+        }
+		public Object getObject() 
+		{
+			return null;
+		}
+	}
+	
+}

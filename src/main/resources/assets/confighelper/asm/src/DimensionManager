@@ -1,0 +1,49 @@
+package net.minecraftforge.common;
+
+import java.util.Hashtable;
+
+import jml.confighelper.reg.Registries;
+
+import net.minecraft.nbt.NBTTagCompound;
+
+public class DimensionManager {
+	
+    /**
+     * Return the next free dimension ID. Note: you are not guaranteed a contiguous
+     * block of free ids. Always call for each individual ID you wish to get.
+     * @return the next free dimension ID
+     */
+    private static Hashtable<Integer, Integer> dimensions = new Hashtable<Integer, Integer>();
+    public static int getNextFreeDimId() 
+    {
+        while (true)
+        {
+            if (!dimensions.containsKey(Registries.nextDim))
+            {
+               return Registries.nextDim;
+            }
+            Registries.nextDim--;
+        }
+    }
+
+    public static NBTTagCompound saveDimensionDataMap()
+    {
+       NBTTagCompound dimMap = new NBTTagCompound();
+       dimMap.setIntArray("DimensionArray", new int[]{3});
+       dimMap.setInteger("dimIndex", Registries.nextDim);
+       return dimMap;
+    }
+
+    public static void loadDimensionDataMap(NBTTagCompound compoundTag)
+    {
+    	if(compoundTag == null)
+    	{
+    		Registries.nextDim = Registries.nextDimFrozen;
+    		return;
+    	}
+    	Registries.nextDim = compoundTag.getInteger("dimIndex");
+    }
+
+	public static void init() {}
+
+}
