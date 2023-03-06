@@ -5,7 +5,7 @@ make modpacks with ease
 
 This mod is a fork of https://github.com/jredfox/confighelper maked with https://github.com/anatawa12/ForgeGradle-example template
 
-to trying to make compats between endlessids , biome ids extender and confighelper
+to trying to make compats between endlessids and confighelper
 
 
 # setup asm
