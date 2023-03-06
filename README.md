@@ -39,4 +39,7 @@ extendEnchantment
 
 # Whats the good way to extends all ids you wants(temporary)
 
-**Install endlessids + confighelper + biome ids extender
+**Install**
++ endlessids [<img src=https://media.forgecdn.net/avatars/130/458/636460205549127215.png height=16>](https://www.curseforge.com/minecraft/mc-mods/endlessids) [<img src=https://modrinth.com/favicon.ico height=16>](https://modrinth.com/mod/endlessids) [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/FalsePattern/EndlessIDs)
++ confighelper [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/quentin452/confighelperXendlessids)
++ biome ids extender [<img src=https://media.forgecdn.net/avatars/130/458/636460205549127215.png height=16>](https://www.curseforge.com/minecraft/mc-mods/biome-id-extender) [<img src=https://modrinth.com/favicon.ico height=16>](https://modrinth.com/mod/biomeidextender) [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/TCLProject/Biome-ID-Extender)
