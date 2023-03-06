@@ -37,6 +37,6 @@ extendEnchantment
 
 **no configurations needed**
 
-# Whats the good way to extends all ids i wants(temporary)
+# Whats the good way to extends all ids you wants(temporary)
 
 **Install endlessids + confighelper + biome ids extender
