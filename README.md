@@ -32,6 +32,7 @@ So disable pls in endlessids.cfg
 extendPotion
 extendBiome
 extendEnchantment
+extendDataWatcher
 ```
 
 # Biome ids Extender seem to be compatible
