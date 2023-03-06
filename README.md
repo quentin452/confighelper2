@@ -36,7 +36,7 @@ extendDataWatcher
 
 # Biome ids Extender seem to be compatible
 
-**potentialy compatible , no configuration needed**
+**seem compatible , no configuration needed**
 
 # Whats the good way to extends all ids you wants
 
