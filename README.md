@@ -23,12 +23,12 @@ jar {
 }
 ```
 
-# compat between endlessids and confighelper
+# Compat between endlessids and confighelper
 
 **Endlessids is incompatible**
 
 
-# compat between biome ids extender and confighelper
+# Compat between biome ids extender and confighelper
 
 **seem compatible , no configuration needed**
 
