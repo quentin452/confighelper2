@@ -25,17 +25,10 @@ jar {
 
 # Compat between endlessids and confighelper
 
-**Endlessids is incompatible**
+**Endlessids is compatible with confighelper(caused by features overlap) if you disable theses features in endlessids.cfg**
 
-
-# Compat between biome ids extender and confighelper
-
-**seem compatible , no configuration needed**
-
-# Whats the good way to extends all ids you wants
-
-for now no good way
-
-# note
-
-Biome ids Extender is incompatible with endlessids
+```
+    extendDataWatcher
+    extendEnchantment
+    extendPotion
+```
