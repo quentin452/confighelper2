@@ -23,16 +23,6 @@ jar {
 }
 ```
 
-# Compat between endlessids and confighelper
-
-**Endlessids is compatible with confighelper if you disable theses features in endlessids.cfg(feature overlap)**
-
-```
-    extendDataWatcher
-    extendEnchantment
-    extendPotion
-```
-
 | Download Endlessids | Compat |
 | --- | --- |
 |[<img src=https://media.forgecdn.net/avatars/130/458/636460205549127215.png height=16>](https://www.curseforge.com/minecraft/mc-mods/endlessids) [<img src=https://modrinth.com/favicon.ico height=16>](https://modrinth.com/mod/endlessids) [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/FalsePattern/EndlessIDs)|Endlessids is compatible with confighelper if you disable theses features to feature overlap extendDataWatcher,extendEnchantment,extendPotion |
