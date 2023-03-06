@@ -19,7 +19,9 @@ plugins {
 }
 
 jar {
-    sourceSets.main.java.exclude('jml/evilnotch/**')
+    exclude {
+        it.path.startsWith("jml/evilnotch/lib/") && it.path.endsWith(".class") && !it.path.endsWith("/Coremod.class")
+    }
 }
 
 apply plugin: 'forge'
