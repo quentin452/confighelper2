@@ -22,4 +22,17 @@ jar {
 }
 ```
 
+# temporary compat between endlessids and confighelper
 
+**Endlessids crash when theses features are enabled in endlessids**
+So disable pls in endlessids.cfg
+
+```
+extendPotion
+extendBiome
+extendEnchantment
+```
+
+# Biome ids Extender seem to be compatible
+
+**no configurations needed**
