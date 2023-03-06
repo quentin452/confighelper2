@@ -67,13 +67,4 @@ public class PatchedClassLoader {
     		CrashReport.makeCrashReport("init", "LaunchClassLoader is unoptimized!");
     	}
 	}
-	
-	/**
-	 * in versions 1.12.2+
-	 */
-	public static void foamFixSupport()
-	{
-		
-	}
-
 }
