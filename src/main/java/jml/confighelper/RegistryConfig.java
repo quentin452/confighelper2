@@ -22,7 +22,7 @@ public class RegistryConfig {
 	
 	public static int limitPotions = Short.MAX_VALUE;
 	public static int limitEnchantments = Short.MAX_VALUE;
-	public static int limitBiomes = 255;
+	public static int limitBiomes = 65536;
 	
 	//passable ids
 	public static String[] passable = new String[]
@@ -68,7 +68,7 @@ public class RegistryConfig {
 		
 		limitPotions = cfg.get("limit", "potions", limitPotions, "Potion[] capacity 0-" + Integer.MAX_VALUE).getInt();
 		limitEnchantments = cfg.get("limit", "enchantments", limitEnchantments, "Enchantment[] capacity 0-" + Short.MAX_VALUE).getInt();
-		limitBiomes = cfg.get("limit", "biomes", limitBiomes, "Biome[] capacity 0-" + 255).getInt();
+		limitBiomes = cfg.get("limit", "biomes", limitBiomes, "Biome[] capacity 0-" + 65536).getInt();
 		cfg.save();
 	}
 
