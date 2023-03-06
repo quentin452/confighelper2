@@ -1,4 +1,5 @@
-
+# ATTENTION THIS mod is only an alternative to wait entity ids extender from endlessids (+ might be buggy/crashy) 
+when endlessids got the entity ids extender features , i think this mod go be obsolete 
 
 # confighelper
 make modpacks with ease
