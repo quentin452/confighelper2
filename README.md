@@ -23,25 +23,14 @@ jar {
 }
 ```
 
-# compat between endlessids and confighelper(temporary)
+# compat between endlessids and confighelper
 
-**Endlessids crash when theses features are enabled in endlessids**
-So disable pls in endlessids.cfg
-
-```
-extendPotion
-extendBiome
-extendEnchantment
-extendDataWatcher
-```
+**Endlessids Is incompatible**
 
 # Biome ids Extender seem to be compatible
 
 **no configurations needed**
 
-# Whats the good way to extends all ids you wants(temporary)
-| Name | Notes |
-| --- | --- | 
-|endlessids [<img src=https://media.forgecdn.net/avatars/130/458/636460205549127215.png height=16>](https://www.curseforge.com/minecraft/mc-mods/endlessids) [<img src=https://modrinth.com/favicon.ico height=16>](https://modrinth.com/mod/endlessids) [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/FalsePattern/EndlessIDs)|To extend block + item ids
-|confighelper(my fork) [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/quentin452/confighelperXendlessids)|To extend entity + DataWatcher + Potion + Enchant ids
-|biome ids extender [<img src=https://media.forgecdn.net/avatars/130/458/636460205549127215.png height=16>](https://www.curseforge.com/minecraft/mc-mods/biome-id-extender) [<img src=https://modrinth.com/favicon.ico height=16>](https://modrinth.com/mod/biomeidextender) [<img src=https://git-scm.com/favicon.ico height=16>](https://github.com/TCLProject/Biome-ID-Extender)|To extend biome ids
+# Whats the good way to extends all ids you wants
+
+for now no good way
