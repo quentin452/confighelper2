@@ -25,7 +25,7 @@ jar {
 
 # Compat between endlessids and confighelper
 
-**Endlessids is compatible with confighelper(caused by features overlap) if you disable theses features in endlessids.cfg**
+**Endlessids is compatible with confighelper if you disable theses features in endlessids.cfg(feature overlap)**
 
 ```
     extendDataWatcher
