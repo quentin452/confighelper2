@@ -23,16 +23,10 @@ jar {
 }
 ```
 
-# compat between endlessids and confighelper(temporary)
+# compat between endlessids and confighelper
 
-**Endlessids Is compatible if you disable some features in endlessids.cfg**
+**Endlessids is incompatible**
 
-```
-extendPotion
-extendBiome
-extendEnchantment
-extendDataWatcher
-```
 
 # Biome ids Extender seem to be compatible
 
