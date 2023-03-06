@@ -28,7 +28,7 @@ jar {
 **Endlessids is incompatible**
 
 
-# Biome ids Extender seem to be compatible
+# compat between biome ids extender and confighelper
 
 **seem compatible , no configuration needed**
 
