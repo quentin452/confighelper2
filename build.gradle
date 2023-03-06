@@ -26,7 +26,7 @@ jar {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.2.5.1"
+version = "1.7.10-1.2.5.2"
 group= "jml.confighelper"
 archivesBaseName = "confighelper"
 
@@ -56,7 +56,7 @@ dependencies {
 
 processResources {
     // This will ensure that this task is redone when the versions change.
-    inputs.property "1.2.4.9", project.version
+    inputs.property "1.2.5.1", project.version
     inputs.property "1.7.10", project.minecraft.version
 
     // Replace values in only mcmod.info.

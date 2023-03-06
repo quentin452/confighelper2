@@ -36,7 +36,17 @@ public class RegistryConfig {
 		"mods.railcraft.common.carts.EntityCartBasic",
 		"mods.railcraft.common.carts.EntityCartChest",
 		"mods.railcraft.common.carts.EntityCartFurnace",
-		"mods.railcraft.common.carts.EntityCartTNT"
+		"mods.railcraft.common.carts.EntityCartTNT",
+		"net.minecraft.world.biome.BiomeGenForest$2",
+		"net.minecraft.world.biome.BiomeGenForest$1",
+		"net.minecraft.world.biome.BiomeGenMutated",
+		"net.minecraft.world.biome.BiomeGenTaiga",
+		"net.minecraft.world.biome.BiomeGenHills",
+		"net.minecraft.world.biome.BiomeGenSavanna$Mutated",
+		"net.minecraft.world.biome.BiomeGenMesa",
+		"net.minecraft.world.biome.BiomeGenPlains",
+		"net.minecraft.world.biome.BiomeGenSnow",
+		"net.minecraft.world.biome.BiomeGenForest"
 	};
 	public static String[] passableSelf = new String[]
 	{
