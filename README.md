@@ -42,4 +42,6 @@ extendDataWatcher
 
 for now no good way
 
-# note Biome ids Extender is incompatible with endlessids
+# note
+
+Biome ids Extender is incompatible with endlessids
