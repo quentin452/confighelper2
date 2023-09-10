@@ -1,6 +1,7 @@
 package net.minecraft.enchantment;
 
 import java.util.ArrayList;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -8,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 
-public abstract class Enchantment
-{
+public abstract class Enchantment {
+
     public static Enchantment[] enchantmentsList = new Enchantment[256];
     /** The list of enchantments applicable by the anvil from a book */
     public static final Enchantment[] enchantmentsBookList;
@@ -63,7 +64,10 @@ public abstract class Enchantment
      */
     public static final Enchantment infinity = new EnchantmentArrowInfinite(51, 1);
     public static final Enchantment field_151370_z = new EnchantmentLootBonus(61, 2, EnumEnchantmentType.fishing_rod);
-    public static final Enchantment field_151369_A = new EnchantmentFishingSpeed(62, 2, EnumEnchantmentType.fishing_rod);
+    public static final Enchantment field_151369_A = new EnchantmentFishingSpeed(
+        62,
+        2,
+        EnumEnchantmentType.fishing_rod);
     public final int effectId;
     private final int weight;
     /** The EnumEnchantmentType given to this Enchantment. */
@@ -72,85 +76,74 @@ public abstract class Enchantment
     protected String name;
     private static final String __OBFID = "CL_00000105";
 
-    protected Enchantment(int p_i1926_1_, int p_i1926_2_, EnumEnchantmentType p_i1926_3_)
-    {
+    protected Enchantment(int p_i1926_1_, int p_i1926_2_, EnumEnchantmentType p_i1926_3_) {
         this.effectId = p_i1926_1_;
         this.weight = p_i1926_2_;
         this.type = p_i1926_3_;
 
-        if (enchantmentsList[p_i1926_1_] != null)
-        {
-            throw new IllegalArgumentException("Duplicate enchantment id! " + this.getClass() + " and " + enchantmentsList[p_i1926_1_].getClass() + " Enchantment ID:" + p_i1926_1_);
-        }
-        else
-        {
+        if (enchantmentsList[p_i1926_1_] != null) {
+            throw new IllegalArgumentException(
+                "Duplicate enchantment id! " + this
+                    .getClass() + " and " + enchantmentsList[p_i1926_1_].getClass() + " Enchantment ID:" + p_i1926_1_);
+        } else {
             enchantmentsList[p_i1926_1_] = this;
         }
     }
 
-    public int getWeight()
-    {
+    public int getWeight() {
         return this.weight;
     }
 
     /**
      * Returns the minimum level that the enchantment can have.
      */
-    public int getMinLevel()
-    {
+    public int getMinLevel() {
         return 1;
     }
 
     /**
      * Returns the maximum level that the enchantment can have.
      */
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return 1;
     }
 
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
-    public int getMinEnchantability(int p_77321_1_)
-    {
+    public int getMinEnchantability(int p_77321_1_) {
         return 1 + p_77321_1_ * 10;
     }
 
     /**
      * Returns the maximum value of enchantability nedded on the enchantment level passed.
      */
-    public int getMaxEnchantability(int p_77317_1_)
-    {
+    public int getMaxEnchantability(int p_77317_1_) {
         return this.getMinEnchantability(p_77317_1_) + 5;
     }
 
     /**
      * Calculates de damage protection of the enchantment based on level and damage source passed.
      */
-    public int calcModifierDamage(int p_77318_1_, DamageSource p_77318_2_)
-    {
+    public int calcModifierDamage(int p_77318_1_, DamageSource p_77318_2_) {
         return 0;
     }
 
-    public float func_152376_a(int p_152376_1_, EnumCreatureAttribute p_152376_2_)
-    {
+    public float func_152376_a(int p_152376_1_, EnumCreatureAttribute p_152376_2_) {
         return 0.0F;
     }
 
     /**
      * Determines if the enchantment passed can be applyied together with this enchantment.
      */
-    public boolean canApplyTogether(Enchantment p_77326_1_)
-    {
+    public boolean canApplyTogether(Enchantment p_77326_1_) {
         return this != p_77326_1_;
     }
 
     /**
      * Sets the enchantment name
      */
-    public Enchantment setName(String p_77322_1_)
-    {
+    public Enchantment setName(String p_77322_1_) {
         this.name = p_77322_1_;
         return this;
     }
@@ -158,22 +151,19 @@ public abstract class Enchantment
     /**
      * Return the name of key in translation table of this enchantment.
      */
-    public String getName()
-    {
+    public String getName() {
         return "enchantment." + this.name;
     }
 
     /**
      * Returns the correct traslated name of the enchantment and the level in roman numbers.
      */
-    public String getTranslatedName(int p_77316_1_)
-    {
+    public String getTranslatedName(int p_77316_1_) {
         String s = StatCollector.translateToLocal(this.getName());
         return s + " " + StatCollector.translateToLocal("enchantment.level." + p_77316_1_);
     }
 
-    public boolean canApply(ItemStack p_92089_1_)
-    {
+    public boolean canApply(ItemStack p_92089_1_) {
         return this.type.canEnchantItem(p_92089_1_.getItem());
     }
 
@@ -184,58 +174,54 @@ public abstract class Enchantment
     /**
      * This applies specifically to applying at the enchanting table. The other method {@link #canApply(ItemStack)}
      * applies for <i>all possible</i> enchantments.
+     * 
      * @param stack
      * @return
      */
-    public boolean canApplyAtEnchantingTable(ItemStack stack)
-    {
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return canApply(stack);
     }
 
     private static final java.lang.reflect.Field bookSetter = Enchantment.class.getDeclaredFields()[1];
+
     /**
      * Add to the list of enchantments applicable by the anvil from a book
      *
      * @param enchantment
      */
-    public static void addToBookList(Enchantment enchantment)
-    {
-        try
-        {
-            net.minecraftforge.common.util.EnumHelper.setFailsafeFieldValue(bookSetter, null,
+    public static void addToBookList(Enchantment enchantment) {
+        try {
+            net.minecraftforge.common.util.EnumHelper.setFailsafeFieldValue(
+                bookSetter,
+                null,
                 com.google.common.collect.ObjectArrays.concat(enchantmentsBookList, enchantment));
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e); //Rethrow see what happens
+        } catch (Exception e) {
+            throw new RuntimeException(e); // Rethrow see what happens
         }
     }
 
     /**
      * Is this enchantment allowed to be enchanted on books via Enchantment Table
+     * 
      * @return false to disable the vanilla feature
      */
-    public boolean isAllowedOnBooks()
-    {
+    public boolean isAllowedOnBooks() {
         return true;
     }
 
-    static
-    {
+    static {
         ArrayList var0 = new ArrayList();
         Enchantment[] var1 = enchantmentsList;
         int var2 = var1.length;
 
-        for (int var3 = 0; var3 < var2; ++var3)
-        {
+        for (int var3 = 0; var3 < var2; ++var3) {
             Enchantment var4 = var1[var3];
 
-            if (var4 != null)
-            {
+            if (var4 != null) {
                 var0.add(var4);
             }
         }
 
-        enchantmentsBookList = (Enchantment[])var0.toArray(new Enchantment[0]);
+        enchantmentsBookList = (Enchantment[]) var0.toArray(new Enchantment[0]);
     }
 }

@@ -5,15 +5,15 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.launchwrapper.LaunchClassLoader;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.RemappingClassAdapter;
 
 import cpw.mods.fml.common.asm.transformers.deobf.FMLRemappingAdapter;
-import jml.evilnotch.lib.reflect.MCPSidedString;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.launchwrapper.LaunchClassLoader;
 
 /***
  * ASM tests
@@ -24,13 +24,13 @@ import net.minecraft.launchwrapper.LaunchClassLoader;
  * modification, are permitted provided that the following conditions
  * are met:
  * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
+ * notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * 3. Neither the name of the copyright holders nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -50,52 +50,40 @@ import net.minecraft.launchwrapper.LaunchClassLoader;
  * @author Eric Bruneton
  */
 public class MCWriter extends ClassWriter {
-	
+
     private LaunchClassLoader l = Launch.classLoader;
-    
-    public MCWriter()
-    {
-    	this(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+
+    public MCWriter() {
+        this(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
     }
 
-    public MCWriter(final int flags) 
-    {
+    public MCWriter(final int flags) {
         super(flags);
     }
 
-	/**
+    /**
      * patched to work with minecraft first two lines @author jredfox
      */
     @Override
-    protected String getCommonSuperClass(String t1, String t2) 
-    {
-        try 
-        {
-        	//mc patch here to work in obfuscated enviorment
-        	String type1 = ObfHelper.forceToDeobfClassName(t1);
-        	String type2 = ObfHelper.forceToDeobfClassName(t2);
-        	
+    protected String getCommonSuperClass(String t1, String t2) {
+        try {
+            // mc patch here to work in obfuscated enviorment
+            String type1 = ObfHelper.forceToDeobfClassName(t1);
+            String type2 = ObfHelper.forceToDeobfClassName(t2);
+
             ClassReader info1 = typeInfo(type1);
             ClassReader info2 = typeInfo(type2);
-            if ((info1.getAccess() & Opcodes.ACC_INTERFACE) != 0) 
-            {
-                if (typeImplements(type2, info2, type1)) 
-                {
+            if ((info1.getAccess() & Opcodes.ACC_INTERFACE) != 0) {
+                if (typeImplements(type2, info2, type1)) {
                     return type1;
-                } 
-                else 
-                {
+                } else {
                     return "java/lang/Object";
                 }
             }
-            if ((info2.getAccess() & Opcodes.ACC_INTERFACE) != 0) 
-            {
-                if (typeImplements(type1, info1, type2)) 
-                {
+            if ((info2.getAccess() & Opcodes.ACC_INTERFACE) != 0) {
+                if (typeImplements(type1, info1, type2)) {
                     return type2;
-                } 
-                else 
-                {
+                } else {
                     return "java/lang/Object";
                 }
             }
@@ -104,34 +92,25 @@ public class MCWriter extends ClassWriter {
             String result = "java/lang/Object";
             int end1 = b1.length();
             int end2 = b2.length();
-            while (true) 
-            {
+            while (true) {
                 int start1 = b1.lastIndexOf(";", end1 - 1);
                 int start2 = b2.lastIndexOf(";", end2 - 1);
-                if (start1 != -1 && start2 != -1 && end1 - start1 == end2 - start2) 
-                {
+                if (start1 != -1 && start2 != -1 && end1 - start1 == end2 - start2) {
                     String p1 = b1.substring(start1 + 1, end1);
                     String p2 = b2.substring(start2 + 1, end2);
-                    if (p1.equals(p2)) 
-                    {
+                    if (p1.equals(p2)) {
                         result = p1;
                         end1 = start1;
                         end2 = start2;
-                    } 
-                    else 
-                    {
+                    } else {
                         return result;
                     }
-                } 
-                else 
-                {
+                } else {
                     return result;
                 }
             }
-        } 
-        catch (Exception e) 
-        {
-        	e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e.toString());
         }
     }
@@ -140,24 +119,23 @@ public class MCWriter extends ClassWriter {
      * Returns the internal names of the ancestor classes of the given type.
      * 
      * @param type
-     *            the internal name of a class or interface.
+     *             the internal name of a class or interface.
      * @param info
-     *            the ClassReader corresponding to 'type'.
+     *             the ClassReader corresponding to 'type'.
      * @return a StringBuilder containing the ancestor classes of 'type',
      *         separated by ';'. The returned string has the following format:
      *         ";type1;type2 ... ;typeN", where type1 is 'type', and typeN is a
      *         direct subclass of Object. If 'type' is Object, the returned
      *         string is empty.
      * @throws IOException
-     *             if the bytecode of 'type' or of some of its ancestor class
-     *             cannot be loaded.
+     *                     if the bytecode of 'type' or of some of its ancestor class
+     *                     cannot be loaded.
      */
-    private StringBuilder typeAncestors(String type, ClassReader info) throws Exception 
-    {
+    private StringBuilder typeAncestors(String type, ClassReader info) throws Exception {
         StringBuilder b = new StringBuilder();
-        while (!"java/lang/Object".equals(type)) 
-        {
-            b.append(';').append(type);
+        while (!"java/lang/Object".equals(type)) {
+            b.append(';')
+                .append(type);
             type = info.getSuperName();
             info = typeInfo(type);
         }
@@ -168,32 +146,26 @@ public class MCWriter extends ClassWriter {
      * Returns true if the given type implements the given interface.
      * 
      * @param type
-     *            the internal name of a class or interface.
+     *             the internal name of a class or interface.
      * @param info
-     *            the ClassReader corresponding to 'type'.
+     *             the ClassReader corresponding to 'type'.
      * @param itf
-     *            the internal name of a interface.
+     *             the internal name of a interface.
      * @return true if 'type' implements directly or indirectly 'itf'
      * @throws IOException
-     *             if the bytecode of 'type' or of some of its ancestor class
-     *             cannot be loaded.
+     *                     if the bytecode of 'type' or of some of its ancestor class
+     *                     cannot be loaded.
      */
-    private boolean typeImplements(String type, ClassReader info, String itf) throws Exception 
-    {
-        while (!"java/lang/Object".equals(type)) 
-        {
+    private boolean typeImplements(String type, ClassReader info, String itf) throws Exception {
+        while (!"java/lang/Object".equals(type)) {
             String[] itfs = info.getInterfaces();
-            for (int i = 0; i < itfs.length; ++i) 
-            {
-                if (itfs[i].equals(itf)) 
-                {
+            for (int i = 0; i < itfs.length; ++i) {
+                if (itfs[i].equals(itf)) {
                     return true;
                 }
             }
-            for (int i = 0; i < itfs.length; ++i) 
-            {
-                if (typeImplements(itfs[i], typeInfo(itfs[i]), itf)) 
-                {
+            for (int i = 0; i < itfs.length; ++i) {
+                if (typeImplements(itfs[i], typeInfo(itfs[i]), itf)) {
                     return true;
                 }
             }
@@ -207,61 +179,53 @@ public class MCWriter extends ClassWriter {
      * this is the non loaded cache file of byte[] of classes that is here temporary till toByteArray() gets called.
      * Also the interfaces here may or may not be adjusted depdending upon if the class is loaded or not
      */
-    public static Map<String, ClassReader> offMemoryCache = new HashMap<String, ClassReader>(50); 
-    
+    public static Map<String, ClassReader> offMemoryCache = new HashMap<String, ClassReader>(50);
+
     /**
      * Returns a ClassReader from the input class. It also deobfuscates it and fetches it when possible from
      * loaded classes
      */
-    private ClassReader typeInfo(final String t) throws Exception 
-    {
-    	String type = ObfHelper.toObfClassName(t);
-    	if(offMemoryCache.containsKey(type))
-    	{
-    		return offMemoryCache.get(type);
-    	}
-    	
+    private ClassReader typeInfo(final String t) throws Exception {
+        String type = ObfHelper.toObfClassName(t);
+        if (offMemoryCache.containsKey(type)) {
+            return offMemoryCache.get(type);
+        }
+
         InputStream is = l.getResourceAsStream(type + ".class");
-        
-        try 
-        {
-        	ClassReader reader = new ClassReader(is);
-            if(ObfHelper.isObf)
-            	reader = patchClass(reader);
-            
+
+        try {
+            ClassReader reader = new ClassReader(is);
+            if (ObfHelper.isObf) reader = patchClass(reader);
+
             offMemoryCache.put(type, reader);
             return reader;
-        } 
-        finally 
-        {
+        } finally {
             is.close();
         }
     }
-    
+
     /**
      * clear the offline memory cache when this is called to save memory
      */
     @Override
-    public byte[] toByteArray()
-    {
-    	offMemoryCache.clear();
-    	ASMHelper.clear();
-    	return super.toByteArray();
+    public byte[] toByteArray() {
+        offMemoryCache.clear();
+        ASMHelper.clear();
+        return super.toByteArray();
     }
 
-    //when computing class higharchy do not read code visit sourses or compute frames
+    // when computing class higharchy do not read code visit sourses or compute frames
     private static final int READER_FLAGS = ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES;
-   
+
     /**
      * deob the class without loading more classes and also attached any transformed interfaces
      */
-    private ClassReader patchClass(ClassReader reader) 
-	{
-    	//do not do any class reading/writing except for the class header
-		ClassWriter classWriter = new ClassWriter(READER_FLAGS);
+    private ClassReader patchClass(ClassReader reader) {
+        // do not do any class reading/writing except for the class header
+        ClassWriter classWriter = new ClassWriter(READER_FLAGS);
         RemappingClassAdapter remapAdapter = new FMLRemappingAdapter(classWriter);
-		reader.accept(remapAdapter, READER_FLAGS);
-		
-		return new ClassReader(classWriter.toByteArray());
-	}
+        reader.accept(remapAdapter, READER_FLAGS);
+
+        return new ClassReader(classWriter.toByteArray());
+    }
 }
