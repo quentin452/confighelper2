@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
@@ -195,12 +196,20 @@ public class Registry implements Iterable<Registry.Entry>{
 			size += li.size();
 		return size;
 	}
+    private static final Logger logger = Logger.getLogger(Registry.class.getName());
 
-	public void checkId(Object obj, int id)
-	{
-		if(id < this.limitLower || id > this.limit)
-			Registries.makeCrashReport(Registries.getCat(), this.dataType + " ids must be between " + this.limitLower + "-" + this.limit + " id:" + id + ", " + getClass(obj).getName());
-	}
+    public void checkId(Object obj, int id) {
+        if (id < 0) {
+            logger.warning("Negative ID detected for " + getClass(obj).getName() + " with ID " + id);
+            return;
+        }
+
+        if (id < this.limitLower || id > this.limit) {
+            Registries.makeCrashReport(Registries.getCat(),
+                this.dataType + " ids must be between " + this.limitLower + "-" + this.limit +
+                    " id:" + id + ", " + getClass(obj).getName());
+        }
+    }
 
 	/**
 	 * get used org Ids in order from least to greatest
