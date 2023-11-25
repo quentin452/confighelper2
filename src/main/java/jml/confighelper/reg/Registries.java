@@ -43,7 +43,7 @@ import net.minecraftforge.common.DimensionManager;
  * @author jredfox
  */
 public class Registries {
-	
+
 	public static String cat = "Loading";
 	public static boolean isCrashing;//basically is in the process of crashing but, hasn't nessarly called Registries#makeCrashReport()
 	private static boolean hasCrashed;//the game has crashed
@@ -58,16 +58,16 @@ public class Registries {
 	 */
 	public static Registry datawatchers;
 	public static CentralRegistry<ResourceLocation, WatcherDataType> datawatchertypes = new CentralRegistry<ResourceLocation, WatcherDataType>(DataType.DATAWATCHERTYPE);
-	
+
 	public static boolean initBiomes = false;
 	public static int nextBiome = biomes.limit;
-	
+
 	static
 	{
 		unfreeze();
 		regWatchers();
 	}
-	
+
 	public static int registerBiome(BiomeGenBase biome, int id, boolean reg)
 	{
 		if(reg || !reg && RegistryConfig.regUnregBiomes)
@@ -79,32 +79,32 @@ public class Registries {
 		System.out.println("Returning Original Biome Id as it's flagged to not be registered:" + id + ", " + biome);
 		return id;
 	}
-	
+
 	public static int registerPotion(Potion p, int id)
 	{
 		return register(p, id, potions);
 	}
-	
+
 	public static int registerEnchantment(Enchantment ench, int id)
 	{
 		return register(ench, id, enchantments);
 	}
-	
+
 	public static int registerProvider(Class<? extends WorldProvider> providerObj, int providerId)
 	{
 		return register(providerObj, providerId, providers);
 	}
-	
+
 	public static int registerDimension(int providerId, int dimId)
 	{
 		return register(new EntryDimension(providerId, dimId), dimId, dimensions);
 	}
-	
-	public static int registerEntity(Class<? extends Entity> entity, String entityName, int id) 
+
+	public static int registerEntity(Class<? extends Entity> entity, String entityName, int id)
 	{
 		return register(new EntryEntity(entity, entityName), id, entities);
 	}
-	
+
 	public static int registerDataWatcher(Entity entity, int id, Registry reg)
 	{
 		if(!(entity instanceof EntityPlayer))
@@ -114,42 +114,42 @@ public class Registries {
 		datawatchers = reg;
 		return register(entity, id, reg);
 	}
-	
+
 	public static int register(Object obj, int id, Registry reg)
 	{
 		return reg.reg(obj, id);
 	}
-	
+
 	public static int registerBlock(Block obj, int id)
 	{
 		throw new RuntimeException("Blocks are already Automated Ids");
 	}
-	
+
 	public static int registerItem(Item obj, int id)
 	{
 		throw new RuntimeException("Items are already Automated Ids");
 	}
-	
+
 	public static int registerTileEntity(TileEntity obj, int id)
 	{
 		throw new RuntimeException("Tile Entitities are already Automated Ids");
 	}
-	
-	public static void unregisterProvider(int id) 
+
+	public static void unregisterProvider(int id)
 	{
 		unregister(id, providers);
 	}
-	
-	public static void unregisterDimension(int id) 
+
+	public static void unregisterDimension(int id)
 	{
 		unregister(id, dimensions);
 	}
-	
+
 	public static void unregister(int id, Registry reg)
 	{
 		reg.unreg(id);
 	}
-	
+
 	public static void strictRegs()
 	{
 		biomes.strict = true;
@@ -160,25 +160,25 @@ public class Registries {
 		entities.strict = true;
 		strictWatcher();
 	}
-	
-	public static void strictWatcher() 
+
+	public static void strictWatcher()
 	{
 		if(datawatchers != null)
 			datawatchers.strict = true;
 	}
-	
-	public static boolean hasConflicts() 
+
+	public static boolean hasConflicts()
 	{
-		return biomes.hasConflicts || 
-				potions.hasConflicts || 
-				enchantments.hasConflicts || 
-				dimensions.hasConflicts || 
+		return biomes.hasConflicts ||
+				potions.hasConflicts ||
+				enchantments.hasConflicts ||
+				dimensions.hasConflicts ||
 				providers.hasConflicts ||
 				entities.hasConflicts ||
 				hasWatcherConflicts();
 	}
 
-	public static boolean hasWatcherConflicts() 
+	public static boolean hasWatcherConflicts()
 	{
 		return datawatchers != null ? datawatchers.hasConflicts : false;
 	}
@@ -214,13 +214,13 @@ public class Registries {
 			t.printStackTrace();
 		}
 	}
-	
+
 	public static void makeCrashReport(String cat, String msg)
 	{
 		makeCrashReport(cat, msg, false);
 	}
-	
-	public static void makeCrashReport(String cat, String msg, boolean onlyWatcher) 
+
+	public static void makeCrashReport(String cat, String msg, boolean onlyWatcher)
 	{
 		if(hasCrashed)
 		{
@@ -235,7 +235,7 @@ public class Registries {
 			Registries.writeWatcher();
 		CrashReport.makeCrashReport(cat, msg);
 	}
-	
+
 	/**
 	 * get the crash report category based on loading or in game
 	 */
@@ -243,51 +243,51 @@ public class Registries {
 	{
 		return cat;
 	}
-	
+
 	public static void setCat(String c)
 	{
 		cat = c;
 	}
-	
-	public static String getConflictTypes() 
+
+	public static String getConflictTypes()
 	{
 		StringBuilder b = new StringBuilder();
 		b.append('[');
 		if(Registries.biomes.hasConflicts)
-			b.append(Registries.biomes.dataType + ", ");
+			b.append(Registries.biomes.dataType).append(", ");
 		if(Registries.potions.hasConflicts)
-			b.append(Registries.potions.dataType + ", ");
+			b.append(Registries.potions.dataType).append(", ");
 		if(Registries.enchantments.hasConflicts)
-			b.append(Registries.enchantments.dataType + ", ");
+			b.append(Registries.enchantments.dataType).append(", ");
 		if(Registries.dimensions.hasConflicts)
-			b.append(Registries.dimensions.dataType + ", ");
+			b.append(Registries.dimensions.dataType).append(", ");
 		if(Registries.providers.hasConflicts)
-			b.append(Registries.providers.dataType + ", ");
+			b.append(Registries.providers.dataType).append(", ");
 		if(Registries.entities.hasConflicts)
-			b.append(Registries.entities.dataType + ", ");
+			b.append(Registries.entities.dataType).append(", ");
 		if(Registries.datawatchers != null && Registries.entities.hasConflicts)
-			b.append(Registries.datawatchers.dataType + ", ");
+			b.append(Registries.datawatchers.dataType).append(", ");
 		String c = b.toString();
 		return c.substring(0, c.length() - 2) + "]";
 	}
-	
-	
+
+
 	public static LoadController loadController;
 	public static ListMultimap<String, ModContainer> packageOwners;
 	/**
 	 * get a modname from a class object is pretty expensive use with caution
 	 */
 	public static String getModName(String clazz)
-	{		
+	{
 		if(clazz.startsWith("net.minecraft."))
 			return "Minecraft";
 		if(packageOwners == null)
 		{
-			try 
+			try
 			{
 				loadController = (LoadController) ReflectionHelper.findField(Loader.class, "modController").get(Loader.instance());
 				packageOwners = (ListMultimap<String, ModContainer>) ReflectionHelper.findField(LoadController.class, "packageOwners").get(loadController);
-			} 
+			}
 			catch (Throwable t)
 			{
 				t.printStackTrace();
@@ -313,30 +313,30 @@ public class Registries {
 		}
 		return "" + null;
 	}
-	
+
 	public static int nextDim = Integer.MAX_VALUE;
 	public static int nextDimFrozen = nextDim;
-	
-	public static boolean keepDimLoaded(int id, boolean keepLoaded) 
+
+	public static boolean keepDimLoaded(int id, boolean keepLoaded)
 	{
 		return RegistryConfig.unloadModDimIds && !Registries.providers.isVanillaId(id) ? false : keepLoaded;
 	}
-	
+
 	/**
-	 * DimensionManager providers and dimIds are unlinked if a conflict occurs 
+	 * DimensionManager providers and dimIds are unlinked if a conflict occurs
 	 * the best way to link them is to guess
 	 */
-	public static int guessProviderId(int providerId) 
+	public static int guessProviderId(int providerId)
 	{
 		List<Registry.Entry> list = Registries.providers.getEntryOrg(providerId);
 		return list.get(list.size() - 1).newId;
 	}
-	
+
 	/**
-	 * DimensionManager providers and dimIds are unlinked if a conflict occurs 
+	 * DimensionManager providers and dimIds are unlinked if a conflict occurs
 	 * the best way to link them is to guess
 	 */
-	public static int guessDimOrgId(int providerId) 
+	public static int guessDimOrgId(int providerId)
 	{
 		for(Registry.Entry e : dimensions)
 		{
@@ -348,12 +348,12 @@ public class Registries {
 		return providerId;
 	}
 
-	public static Registry createWatcherReg(Entity e) 
+	public static Registry createWatcherReg(Entity e)
 	{
 		return e instanceof EntityPlayer ? new RegistryDatawatcher() : null;
 	}
-	
-	public static Integer getWatcherTypeId(Class<? extends Object> clazz) 
+
+	public static Integer getWatcherTypeId(Class<? extends Object> clazz)
 	{
 		for(WatcherDataType watcher : datawatchertypes.reg.values())
 		{
@@ -362,18 +362,18 @@ public class Registries {
 		}
 		return null;
 	}
-	
-	public static void writeWatcher(PacketBuffer buf, int dataType, Object object) throws IOException 
+
+	public static void writeWatcher(PacketBuffer buf, int dataType, Object object) throws IOException
 	{
 		datawatchertypes.get(dataType).write(buf, object);
 	}
 
-	public static Object readWatcher(PacketBuffer buf, int dataType) throws IOException 
+	public static Object readWatcher(PacketBuffer buf, int dataType) throws IOException
 	{
 		return datawatchertypes.get(dataType).read(buf);
 	}
-	
-	public static void loadComplete() 
+
+	public static void loadComplete()
 	{
     	Registries.freeze();
 		Registries.biomes.securityCheck();
@@ -381,7 +381,7 @@ public class Registries {
 		Registries.enchantments.securityCheck();//security check static[] capeable registries again to ensure registry saftey in case something screwed it up in post init
 	}
 
-	public static void regWatchers() 
+	public static void regWatchers()
 	{
 		datawatchertypes.register(0, new WatcherByte());
 		datawatchertypes.register(1, new WatcherShort());
@@ -391,23 +391,23 @@ public class Registries {
 		datawatchertypes.register(5, new WatcherItemStack());
 		datawatchertypes.register(6, new WatcherChunkCoords());
 	}
-	
+
 	public static void regBiomes()
 	{
 	   	Registries.registerBiome(BiomeGenBase.biomeList[161], 161, true);//fix vanilla
 	}
-	
+
 	public static void unfreeze()
 	{
 		datawatchertypes.unfreeze();
 	}
-	
+
 	public static void freeze()
 	{
 		datawatchertypes.freeze();
 	}
 
-	public static boolean isModLoaded(String modid) 
+	public static boolean isModLoaded(String modid)
 	{
 		if(modid.equals("minecraft"))
 			return true;

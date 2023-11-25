@@ -1,5 +1,6 @@
 package jml.confighelper;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
@@ -22,11 +23,11 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ModReference.MODID, version = ModReference.VERSION, name = ModReference.NAME, dependencies = "required-after:evilnotchlib")
-public class ConfigHelperMod 
-{	
+public class ConfigHelperMod
+{
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
-    {	
+    {
 		MinecraftForge.EVENT_BUS.register(new WatcherEvent());
 		//force load classes
     	Enchantment e = Enchantment.aquaAffinity;
