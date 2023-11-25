@@ -5,5 +5,5 @@ import org.apache.logging.log4j.Logger;
 
 public class ConfigHelperLogger {
 
-    public static final Logger LOGGER = LogManager.getLogger("MultithreadingAndTweaks");
+    public static final Logger LOGGER = LogManager.getLogger("ConfigHelper2");
 }
