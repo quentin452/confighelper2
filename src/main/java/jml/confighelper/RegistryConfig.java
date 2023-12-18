@@ -1,15 +1,11 @@
 package jml.confighelper;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import jml.evilnotch.lib.JavaUtil;
 import jml.evilnotch.lib.asm.ASMHelper;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.config.Configuration;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RegistryConfig {
 
@@ -216,9 +212,11 @@ public class RegistryConfig {
 	};
 	public static String[] passableSelf = new String[]
 	{
+        "fr.iamacat.dangerzone_iamacatfr.worldgen.biomes.BiomeGenUtopianPlains",
 		"net.aetherteam.aether.dungeons.worldgen.DungeonsBiome",
 		"danger.orespawn.BiomeGenUtopianPlains",
-		"net.minecraft.entity.item.EntityMinecartHopper"
+		"net.minecraft.entity.item.EntityMinecartHopper",
+        " appeng.spatial.StorageWorldProvider"
 	};
 	public static Set<Integer> passableDimIds;
 	public static Set<Integer> passableWatcherIds;
